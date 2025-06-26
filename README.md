@@ -52,7 +52,7 @@ base_image:
 Deploy your model using the Truss CLI:
 
 ```bash
-truss push .
+truss push . --promote
 ```
 
 For more detailed information about Truss deployment, refer to the [truss push documentation](https://docs.baseten.co/reference/cli/truss/push).
