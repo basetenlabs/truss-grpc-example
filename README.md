@@ -24,7 +24,7 @@ pip install --upgrade truss
 
 ### 0. Generate Protobuf files
 ```bash
-protoc --go_out=. --go-grpc_out=. spacer.proto
+protoc --go_out=. --go-grpc_out=. example.proto
 ```
 For more information about Protobuf, refer to the [Protobuf documentation](https://protobuf.dev/reference/go/go-generated/).
 

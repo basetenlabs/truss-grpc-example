@@ -5,7 +5,7 @@ import (
 	"log"
 	"net"
 
-	pb "asdf/spacer"
+	pb "asdf/example"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/health"
@@ -14,12 +14,12 @@ import (
 )
 
 type server struct {
-	pb.UnimplementedYapperServiceServer
+	pb.UnimplementedExampleServiceServer
 }
 
-func (s *server) Yap(req *pb.YapRequest, stream grpc.ServerStreamingServer[pb.YapReply]) error {
+func (s *server) Example(req *pb.ExampleRequest, stream grpc.ServerStreamingServer[pb.ExampleReply]) error {
 	for i := 0; i < 100; i++ {
-		stream.Send(&pb.YapReply{
+		stream.Send(&pb.ExampleReply{
 			Reply: fmt.Sprintf("%d: %s", i, req.Message),
 		})
 	}
@@ -40,11 +40,11 @@ func main() {
 	healthServer = health.NewServer()
 
 	healthStatus = healthpb.HealthCheckResponse_SERVING
-	healthServer.SetServingStatus("yapper.YapperService", healthStatus)
+	healthServer.SetServingStatus("example.ExampleService", healthStatus)
 
 	healthpb.RegisterHealthServer(s, healthServer)
 
-	pb.RegisterYapperServiceServer(s, &server{})
+	pb.RegisterExampleServiceServer(s, &server{})
 
 	serviceInfo := s.GetServiceInfo()
 	fmt.Println("Registered gRPC services:")

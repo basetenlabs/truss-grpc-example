@@ -6,7 +6,7 @@ COPY go.mod go.sum ./
 
 RUN go mod download
 
-COPY spacer /spacer
+COPY example /example
 COPY server /server
 
 RUN go build -o grpcserver server/main.go

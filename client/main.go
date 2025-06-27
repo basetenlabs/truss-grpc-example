@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"log"
 
-	pb "asdf/spacer"
+	pb "asdf/example"
 
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/metadata"
 )
 
@@ -18,14 +19,14 @@ var (
 
 func main() {
 	do := func() {
-		conn, err := grpc.NewClient(fmt.Sprintf("model-%s.grpc.api.baseten.co:80", modelID), grpc.WithInsecure())
+		conn, err := grpc.NewClient(fmt.Sprintf("model-%s.grpc.api.baseten.co:80", modelID), grpc.WithTransportCredentials(insecure.NewCredentials()))
 		if err != nil {
 			log.Printf("could not connect: %v", err)
 			return
 		}
 		defer conn.Close()
 
-		client := pb.NewYapperServiceClient(conn)
+		client := pb.NewExampleServiceClient(conn)
 
 		md := metadata.New(map[string]string{
 			"baseten-authorization": fmt.Sprintf("Api-Key %s", basetenApiKey),
@@ -35,9 +36,9 @@ func main() {
 		// Create a new context with the metadata
 		ctx := metadata.NewOutgoingContext(context.Background(), md)
 
-		stream, err := client.Yap(ctx, &pb.YapRequest{Message: "😊"})
+		stream, err := client.Example(ctx, &pb.ExampleRequest{Message: "😊"})
 		if err != nil {
-			log.Printf("error calling yap: %v", err)
+			log.Printf("error calling example: %v", err)
 			return
 		}
 
