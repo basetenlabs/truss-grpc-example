@@ -12,7 +12,7 @@ This project demonstrates a gRPC service using Truss for model deployment.
 
 Get the repository with:
 ```bash
-git clone https://github.com/basetenlabs/truss-grpc-demo.git
+git clone https://github.com/basetenlabs/truss-grpc-example.git
 ```
 
 Install Truss with:
