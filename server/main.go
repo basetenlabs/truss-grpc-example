@@ -19,9 +19,11 @@ type server struct {
 
 func (s *server) Example(req *pb.ExampleRequest, stream grpc.ServerStreamingServer[pb.ExampleReply]) error {
 	for i := 0; i < 100; i++ {
-		stream.Send(&pb.ExampleReply{
+		if err := stream.Send(&pb.ExampleReply{
 			Reply: fmt.Sprintf("%d: %s", i, req.Message),
-		})
+		}); err != nil {
+			return err
+		}
 	}
 	return nil
 }
